@@ -1,7 +1,7 @@
 import nltk
 from nltk import CFG
 
-# 1. Tu Gramática 100% LL(1)
+# 1. Gramática 100% LL(1)
 grammar = CFG.fromstring("""
     # SÍMBOLO INICIAL
     S -> Oracion | Frase_Imp | SP_Cadena
@@ -14,7 +14,7 @@ grammar = CFG.fromstring("""
 
     # MÓDULO 2: Preposicional
     SP_Cadena -> prep sust SP_Resto | 
-    SP_Resto -> SP_Cadena | sust | 
+    SP_Resto -> prep sust SP_Resto | sust | 
 
     # MÓDULO 3: Oraciones Completas
     Pred -> v_trans Obj | Atrib v_cop | v_cop Atrib
@@ -29,7 +29,7 @@ grammar = CFG.fromstring("""
     Obj -> Suj
     Atrib -> Suj
 
-   # DICCIONARIO LÉXICO CORREGIDO
+   # DICCIONARIO LÉXICO 
     v_imp -> 'veni' | 'vince' | 'memento' | 'carpe' | 'divide' | 'festina' | 'age' | 'impera'
     sust -> 'diem' | 'vino' | 'veritas' | 'nihilo' | 'astra' | 'amor' | 'omnia' | 'verba' | 'nihil' | 'urbe' | 'condita' | 'humanum' | 'scripta' | 'aspera' | 'mori' | 'quod' | 'agis'
     prep -> 'in' | 'ex' | 'per' | 'ad' | 'ab'
@@ -44,7 +44,7 @@ grammar = CFG.fromstring("""
 # 2. Creamos el Parser
 parser = nltk.ChartParser(grammar)
 
-# 3. Lista de oraciones "Modo Difícil"
+# 3. Lista de oraciones
 frases_de_prueba = [
     "Age quod agis",
     "Festina lente",
@@ -77,5 +77,5 @@ for frase in frases_de_prueba:
     else:
         for tree in arboles_generados:
             tree.pretty_print()
-            # tree.draw() # <--- Descomenta para ver la interfaz gráfica
+            # tree.draw() # <--- Descomentar para ver la interfaz gráfica
         print("-" * 40)
